@@ -1,0 +1,284 @@
+/////1.zadatak
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace OOP_LV6_Calc
+{
+    public partial class Form1 : Form
+    {
+        double a = 0, b = 0;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void opB_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void butPlus_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (!double.TryParse(opB.Text, out b))
+                MessageBox.Show("Pogresan unos opren da b!", "Pogreska!");
+            else
+            {
+                lblRes.Text = (a + b).ToString();
+            }
+        }
+
+        private void butMinus_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (!double.TryParse(opB.Text, out b))
+                MessageBox.Show("Pogresan unos oprenda b!", "Pogreska!");
+            else
+            {
+                lblRes.Text = (a - b).ToString();
+            }
+        }
+
+        private void butPuta_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (!double.TryParse(opB.Text, out b))
+                MessageBox.Show("Pogresan unos oprenda b!", "Pogreska!");
+            else
+            {
+                lblRes.Text = (a * b).ToString();
+            }
+        }
+
+        private void butDijeljenje_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (!double.TryParse(opB.Text, out b))
+                MessageBox.Show("Pogresan unos oprenda b!", "Pogreska!");
+            else if (b == 0)
+                MessageBox.Show("Pogresan unos oprenda b!", "Pogreska!");
+            else
+            {
+                lblRes.Text = (a / b).ToString();
+            }
+        }
+
+        private void butaKv_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else
+            {
+                lblRes.Text = (a * a).ToString();
+            }
+        }
+
+        private void butAnaB_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (!double.TryParse(opB.Text, out b))
+                MessageBox.Show("Pogresan unos oprenda b!", "Pogreska!");
+            else
+            {
+                double rezultat = a;
+                double c;
+                if (b > 0)
+                {
+                    c = b;
+                    do
+                    {
+                        rezultat = rezultat * a;
+                        c--;
+                    } while (c > 0);
+                }
+                else if (b == 0)
+                {
+                    rezultat = 1;
+                }
+                else
+                {
+                    c = b;
+                    do
+                    { 
+                        rezultat = rezultat * a;
+                        c++;
+                    } while (c < 0);
+                    rezultat = 1 / rezultat;
+                }
+                lblRes.Text = rezultat.ToString();
+            }
+        }
+
+        private void butLog_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (a < 0)
+                MessageBox.Show("Pogresan unos opreanda a!", "Pogreska!");
+            else if (a == 0)
+                lblRes.Text = "-Beskonacno";
+            else
+            {
+                lblRes.Text = Math.Log(a).ToString();
+            }
+        }
+
+        private void butKorjen_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else if (a < 0)
+                MessageBox.Show("Pogresan unos opreanda a!", "Pogreska!");
+            else
+            {
+                lblRes.Text = Math.Sqrt(a).ToString();
+            }
+        }
+
+        private void butSin_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else
+            {
+                lblRes.Text = Math.Sin(a).ToString();
+            }
+        }
+
+        private void butCos_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(opA.Text, out a))
+                MessageBox.Show("Pogresan unos operanda a!", "Pogreska!");
+            else
+            {
+                lblRes.Text = Math.Cos(a).ToString();
+            }
+        }
+
+        private void opA_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+    }
+}
+
+
+////////2.zadatak
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace OOP_LV6_Hangman
+{
+    public partial class Form1 : Form
+    {
+        int i = 0;
+        string rijec;
+        char slovo;
+        bool pogodak = false;
+        int pokusaji = 0;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void BtnGen_Click(object sender, EventArgs e)
+        {
+            string[] lines = File.ReadAllLines(@"E:\Rijeci.txt");
+            Random rand = new Random();
+
+            StreamReader sr = new StreamReader(@"E:\Rijeci.txt");
+            while (sr.ReadLine() != null)
+                i++;
+
+            sr = new StreamReader(@"E:\Rijeci.txt");
+
+            for (int k = 0; k < rand.Next(1, i - 1); k++)
+                rijec = sr.ReadLine();
+
+            lblZvj.Text = "";
+            for(i=0; i<rijec.Length; i++)
+                lblZvj.Text = lblZvj.Text.Insert(i, "*");
+
+            lblPreostali.Text = (7).ToString();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnGuess_Click(object sender, EventArgs e)
+        {
+            slovo = textGuess.Text[0];
+
+            for(i=0; i < rijec.Length; i++)
+            {
+                if(Char.ToUpper(rijec[i])==Char.ToUpper(slovo))
+                {
+                    pogodak = true;
+                    lblZvj.Text = lblZvj.Text.Remove(i, 1);
+                    lblZvj.Text = lblZvj.Text.Insert(i, slovo.ToString());
+                }
+            }
+
+            if (lblZvj.Text.ToUpper() == rijec.ToUpper())
+                Pobjeda();
+
+            if (!pogodak)
+            {
+                pokusaji++;
+                lblPreostali.Text = (7 - pokusaji).ToString();
+                if (pokusaji == 7)
+                    Gubitak();
+            }
+            pogodak = false;
+        }
+
+        private void Gubitak()
+        {
+            MessageBox.Show("Izgubili ste!");
+            NoviGame();
+        }
+
+        private void Pobjeda()
+        {
+            MessageBox.Show("Pobijedili ste!");
+            NoviGame();
+        }
+
+        private void NoviGame()
+        {
+            textGuess.Text = "";
+            lblPreostali.Text = ".";
+            lblZvj.Text = "Nova igra?";
+            rijec = "";
+        }
+
+        private void lblPreT_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
